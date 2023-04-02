@@ -10,5 +10,22 @@ module Luhn where
 -- Не пытайтесь собрать всё в одну функцию, используйте вспомогательные.
 -- Например: разбить число на цифры (возможно, сразу в обратном порядке).
 -- Не забудьте добавить тесты, в том числе для вспомогательных функций!
+
+
 isLuhnValid :: Int -> Bool
-isLuhnValid = error "todo"
+isLuhnValid = isCorrecModTen . sum . getEvenTrancformed . revNum
+
+revNum :: Int -> [Int]
+revNum 0 = []
+revNum x = (x `mod` 10) : revNum (x `div` 10)
+
+getEvenTrancformed :: [Int] -> [Int]
+getEvenTrancformed (x:y:xs) = x : (y*2 `mod` 9) : getEvenTrancformed xs
+getEvenTrancformed [x] = x : []
+getEvenTrancformed [] = []
+  
+
+isCorrecModTen :: Int -> Bool
+isCorrecModTen x 
+  | x `mod` 10 == 0 = True
+  | otherwise = False
